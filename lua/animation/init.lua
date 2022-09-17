@@ -7,11 +7,11 @@ local floor = math.floor
 ---@param start? number some time point in the past
 ---@return number time
 local function time(start)
-   local time = vim.loop.hrtime() / 1e6
+   local t = vim.loop.hrtime() / 1e6
    if start then
-      time = time - start
+      t = t - start
    end
-   return time
+   return t
 end
 
 ---@param x number
