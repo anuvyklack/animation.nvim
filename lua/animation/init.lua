@@ -74,7 +74,7 @@ function Animation:_tick()
       return
    end
 
-   self._frame = self._frame + 1
+   local frame = self._frame + 1
 
    if total_time >= duration then
       -- print('total > duration ', self._frame, ' elapsed ', elapsed, ' total ', total_time)
@@ -91,19 +91,20 @@ function Animation:_tick()
    end
 
    local repeat_time
-   if total_time > (self._frame + 1) * period then
+   if total_time > frame * period then
       local x
-      self._frame, x = modf(total_time / period)
+      frame, x = modf(total_time / period)
       repeat_time = period - x * period
    else
-      repeat_time = (self._frame + 1) * period - total_time
+      repeat_time = (frame + 1) * period - total_time
    end
    repeat_time = round(repeat_time)
    repeat_time = (repeat_time ~= 0) and repeat_time or period
    self._timer:set_repeat(repeat_time)
+   self._frame = frame
 
    -- print(string.format('%2d   elapsed %2d   repeat %2d   total %3d',
-   --                     self._frame, elapsed, repeat_time, total_time))
+   --                     frame, elapsed, repeat_time, total_time))
 
    self._start = time()
    self._timer:again()
